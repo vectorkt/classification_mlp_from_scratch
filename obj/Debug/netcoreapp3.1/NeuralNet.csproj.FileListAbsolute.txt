@@ -1,0 +1,13 @@
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.exe
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.deps.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.runtimeconfig.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.runtimeconfig.dev.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.dll
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\NeuralNet.pdb
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.csprojAssemblyReference.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.AssemblyInfoInputs.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.AssemblyInfo.cs
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.csproj.CoreCompileInputs.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.dll
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.pdb
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\NeuralNet.genruntimeconfig.cache
