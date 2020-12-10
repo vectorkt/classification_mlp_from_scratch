@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Work\\C#\\NeuralNet\\NeuralNet.csproj",
-      "projectName": "NeuralNet",
-      "projectPath": "D:\\Work\\C#\\NeuralNet\\NeuralNet.csproj",
+      "projectUniqueName": "D:\\Work\\C#\\NeuralNet\\MLPScratch.csproj",
+      "projectName": "MLPScratch",
+      "projectPath": "D:\\Work\\C#\\NeuralNet\\MLPScratch.csproj",
       "packagesPath": "C:\\Users\\Frost\\.nuget\\packages\\",
       "outputPath": "D:\\Work\\C#\\NeuralNet\\obj\\",
       "projectStyle": "PackageReference",

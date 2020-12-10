@@ -2,23 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NeuralNet
+namespace MLPScratch
 {
     class LinearAlgebra
     {
-        //consider deleting
-        static private void printArray(int[] arr) {
 
-            Console.Write("[ ");
-            foreach(var a in arr)
-            {
-
-                Console.Write(a+" ");
-
-            }
-            Console.Write("]");
-
-        }
 
         static public void printTensor(System.Array array)
         {
@@ -50,7 +38,7 @@ namespace NeuralNet
 
         }
 
-        static private void printNArrayRecursive(System.Array array, int[] index, int dim)
+        static private void printNArrayRecursive(Array array, int[] index, int dim)
         {
 
             //Console.WriteLine(dim);
@@ -104,22 +92,27 @@ namespace NeuralNet
         }
 
 
-        public delegate decimal generatorFunctionDelegate();
+        static public Array shape(Array tensor) {
 
+            int[] shape = new int[tensor.Rank];
 
-        private static decimal staticDecimal()
-        {
-            Console.WriteLine("hello delegate");
-            return 0.7M;
+            for (int d = 0; d < tensor.Rank; d++) {
 
+                shape[d] = tensor.GetLength(d);
+            
+            }
+
+            return shape;
+            
         }
 
-        static public Array generateTensor(generatorFunctionDelegate generatorFunction, params int[] dims ) {
+
+        static public Array generateTensor(Func<double>  generatorFunction, params int[] dims ) {
 
             int[] myLengthsArray = dims;
 
 
-            Array array = Array.CreateInstance(typeof(decimal), dims);
+            Array array = Array.CreateInstance(typeof(double), dims);
 
 
             int[] index = dims;
@@ -142,7 +135,7 @@ namespace NeuralNet
 
 
 
-        static private void generateTensorRecursive(System.Array array, int[] index, int dim, generatorFunctionDelegate generatorFunction)
+        static private void generateTensorRecursive(System.Array array, int[] index, int dim, Func<double> generatorFunction)
         {
 
            
@@ -180,7 +173,7 @@ namespace NeuralNet
 
 
        
-        static public Array scalarMultiplication(Decimal scalar, Array tensorInput)
+        static public Array scalarMultiplication(double scalar, Array tensorInput)
         {
 
             Array tensor = (Array)tensorInput.Clone();
@@ -203,7 +196,7 @@ namespace NeuralNet
 
         }
 
-        static private void scalarMultiplicationRecursive(System.Array array, int[] index, int dim,Decimal scalar)
+        static private void scalarMultiplicationRecursive(System.Array array, int[] index, int dim,double scalar)
         {
             
             if (dim == array.Rank - 1)
@@ -214,7 +207,7 @@ namespace NeuralNet
 
                     index[dim] = i;
                     
-                    Decimal value = (Decimal) array.GetValue(index);                  
+                    double value = (double) array.GetValue(index);                  
 
                     value *= scalar;
 
@@ -240,7 +233,64 @@ namespace NeuralNet
         }
 
 
-        
+        static public Array applyFunction(Array tensorInput, Func<double, double> function)
+        {
+
+            Array tensor = (Array)tensorInput.Clone();
+
+            int[] index = new int[tensor.Rank];// = new int[] { 0, 0, 0 };
+
+            //initialize indexes
+            for (int i = 0; i < index.Length; i++)
+            {
+
+                index[i] = 0;
+
+            }
+
+
+
+            applyFunctionRecursive(tensor, index, 0, function);
+
+            return tensor;
+
+        }
+
+        static private void applyFunctionRecursive(System.Array array, int[] index, int dim, Func<double,double> function)
+        {
+
+            if (dim == array.Rank - 1)
+            {
+
+                for (int i = 0; i < array.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    double value = (double)array.GetValue(index);
+
+                    value = function(value);
+
+                    array.SetValue(value, index);
+
+                }
+
+            }
+            else
+            {
+
+                for (int i = 0; i < array.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    applyFunctionRecursive(array, index, dim + 1, function);
+
+                }
+
+            }
+
+        }
 
 
         static public Array addition(Array tensorInputA, Array tensorInputB) {
@@ -272,23 +322,12 @@ namespace NeuralNet
         }
 
 
-
-
-      
-
-
-       
-
-
- 
-
-
         static public Array concatenateRows(Array tensorInputA, Array tensorInputB)
         {
 
 
-            Decimal[,] tensorA = (Decimal[,])tensorInputA.Clone();
-            Decimal[,] tensorB = (Decimal[,])tensorInputB.Clone();
+            double[,] tensorA = (double[,])tensorInputA.Clone();
+            double[,] tensorB = (double[,])tensorInputB.Clone();
 
             int rowsA  = tensorA.GetLength(0);
             int colsA = tensorA.GetLength(1);
@@ -296,7 +335,7 @@ namespace NeuralNet
             int rowsB  = tensorB.GetLength(0);
             int colsB = tensorB.GetLength(1);
 
-            if (rowsA != rowsB) {
+            if (colsA != colsB) {
 
                 throw new System.ArgumentException("tensor sizes don't match");
 
@@ -307,7 +346,7 @@ namespace NeuralNet
 
             //Console.WriteLine();
 
-            Decimal[,] result = new Decimal[rowsA + rowsB, colsA];
+            double[,] result = new double[rowsA + rowsB, colsA];
 
             int rr = 0;
 
@@ -349,8 +388,8 @@ namespace NeuralNet
         {
 
 
-            Decimal[,] tensorA = (Decimal[,])tensorInputA.Clone();
-            Decimal[,] tensorB = (Decimal[,])tensorInputB.Clone();
+            double[,] tensorA = (double[,])tensorInputA.Clone();
+            double[,] tensorB = (double[,])tensorInputB.Clone();
 
             int rowsA = tensorA.GetLength(0);
             int colsA = tensorA.GetLength(1);
@@ -359,10 +398,11 @@ namespace NeuralNet
             int colsB = tensorB.GetLength(1);
 
 
-            if (colsA != colsB)
+            if (rowsA != rowsB)
             {
 
-                throw new System.ArgumentException("tensor sizes don't match");
+                throw new System.ArgumentException("tensor sizes don't match: (" +
+                    rowsA + " " + colsA + ") (" + rowsB + " " + colsB + ")");
 
             }
 
@@ -371,7 +411,7 @@ namespace NeuralNet
 
             //Console.WriteLine();
 
-            Decimal[,] result = new Decimal[rowsA, colsA + colsB];
+            double[,] result = new double[rowsA, colsA + colsB];
 
             int cr = 0;
 
@@ -404,12 +444,12 @@ namespace NeuralNet
         static public Array transpose(Array tensorInput) {
 
             
-            Decimal[,] tensor = (Decimal[,])tensorInput.Clone();
+            double[,] tensor = (double[,])tensorInput.Clone();
 
             int rows = tensor.GetLength(0);
             int cols = tensor.GetLength(1);
 
-            Decimal[,] transposed = new Decimal[cols, rows];
+            double[,] transposed = new double[cols, rows];
 
             for (int c = 0; c < cols; c++) {
 
@@ -431,11 +471,11 @@ namespace NeuralNet
 
         static private Array  getRow(Array tensorInput, int row ) {
 
-            Decimal[,] tensor = (Decimal[,])tensorInput.Clone();
+            double[,] tensor = (double[,])tensorInput.Clone();
 
             int cols = tensor.GetLength(1);
 
-            Decimal[,] result = new decimal[1, cols];
+            double[,] result = new double[1, cols];
 
 
             for (int c = 0; c < cols; c++) {
@@ -452,11 +492,11 @@ namespace NeuralNet
         static private Array getCol(Array tensorInput, int col)
         {
 
-            Decimal[,] tensor = (Decimal[,])tensorInput.Clone();
+            double[,] tensor = (double[,])tensorInput.Clone();
 
             int rows = tensor.GetLength(0);
 
-            Decimal[,] result = new decimal[rows, 1];
+            double[,] result = new double[rows, 1];
 
 
             for (int r = 0; r < rows; r++)
@@ -470,12 +510,12 @@ namespace NeuralNet
         }
 
 
-        static public Array matrixToVector(Array matrixInput,Array vectorInput) {
+        static private Array matrixToVector(Array matrixInput,Array vectorInput) {
 
 
 
-            Decimal[,] matrix = (Decimal[,])matrixInput.Clone();
-            Decimal[,] vector = (Decimal[,])vectorInput.Clone();
+            double[,] matrix = (double[,])matrixInput.Clone();
+            double[,] vector = (double[,])vectorInput.Clone();
 
             int rowsM = matrix.GetLength(0);
             int colsM = matrix.GetLength(1);
@@ -489,8 +529,8 @@ namespace NeuralNet
 
             }
 
-            Decimal[,] transpose = (decimal[,]) LinearAlgebra.transpose(vector);
-            Decimal[,] result = new Decimal[rowsM,1];
+            double[,] transpose = (double[,]) LinearAlgebra.transpose(vector);
+            double[,] result = new double[rowsM,1];
 
 
             Array col;
@@ -501,7 +541,7 @@ namespace NeuralNet
                 
                 col = LinearAlgebra.scalarMultiplication(transpose[0, c], col);
                 
-                result = (decimal[,])LinearAlgebra.addition(result, col);
+                result = (double[,])LinearAlgebra.addition(result, col);
                 
 
 
@@ -519,8 +559,16 @@ namespace NeuralNet
         {
 
 
-            Decimal[,] tensorA = (Decimal[,])tensorInputA.Clone();
-            Decimal[,] tensorB = (Decimal[,])tensorInputB.Clone();
+            if (tensorInputA.Rank>2 || tensorInputB.Rank>2)
+            {
+
+                throw new System.ArgumentException("tensor operations greater than 2d currently not supported");
+
+            }
+
+
+            double[,] tensorA = (double[,])tensorInputA.Clone();
+            double[,] tensorB = (double[,])tensorInputB.Clone();
 
             int rowsA = tensorA.GetLength(0);
             int colsA = tensorA.GetLength(1);
@@ -532,22 +580,51 @@ namespace NeuralNet
             if (colsA != rowsB)
             {
 
-                throw new System.ArgumentException("tensor sizes don't match");
+                throw new System.ArgumentException("tensor sizes don't match: ("+
+                    rowsA + " " + colsA + ") ("+rowsB + " " +colsB+")");
 
             }
 
             Array nextColumn = LinearAlgebra.getCol(tensorB, 0);
 
+            /*
+            Console.Write("tensorA");
+            LinearAlgebra.printTensor(LinearAlgebra.shape(tensorA));
+            Console.Write("nextColumn");
+            LinearAlgebra.printTensor(LinearAlgebra.shape(nextColumn));
+            /**/
+
+
             Array result = LinearAlgebra.matrixToVector(tensorA, nextColumn);
 
             Array toConcatenate;
 
+            /*
+            Console.Write("result");
+            LinearAlgebra.printTensor(LinearAlgebra.shape(result));
+            /**/
+
             for (int c = 1; c < colsB; c++) {
-                
+                Console.WriteLine();
                 nextColumn = LinearAlgebra.getCol(tensorB, c);
-                
+
+
+                /*
+                Console.Write("tensorA");
+                LinearAlgebra.printTensor(LinearAlgebra.shape(tensorA));
+                Console.Write("nextColumn");
+                LinearAlgebra.printTensor(LinearAlgebra.shape(nextColumn));
+                /**/
+
                 toConcatenate = LinearAlgebra.matrixToVector(tensorA, nextColumn);
-                
+
+                /*
+                Console.Write("result");
+                LinearAlgebra.printTensor(LinearAlgebra.shape(result));
+                Console.Write("toConcatenate");
+                LinearAlgebra.printTensor(LinearAlgebra.shape(toConcatenate));
+                /**/
+
                 result = LinearAlgebra.concatenateColumns(result, toConcatenate);
                 
             }
@@ -557,7 +634,7 @@ namespace NeuralNet
         }
 
 
-        static public Array applyOperation(Array tensorInputA, Array tensorInputB, Func<Decimal, Decimal, Decimal> operation)
+        static public Array applyOperation(Array tensorInputA, Array tensorInputB, Func<double, double, double> operation)
         {
 
             Array tensorA = (Array)tensorInputA.Clone();
@@ -606,7 +683,7 @@ namespace NeuralNet
 
         }
 
-        static private void applyOperationRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim, Func<Decimal, Decimal, Decimal> operation)
+        static private void applyOperationRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim, Func<double, double, double> operation)
         {
 
             if (dim == tensorA.Rank - 1)
@@ -617,10 +694,10 @@ namespace NeuralNet
 
                     index[dim] = i;
 
-                    Decimal valueA = (Decimal)tensorA.GetValue(index);
-                    Decimal valueB = (Decimal)tensorB.GetValue(index);
+                    double valueA = (double)tensorA.GetValue(index);
+                    double valueB = (double)tensorB.GetValue(index);
 
-                    Decimal value = operation(valueA,valueB);
+                    double value = operation(valueA,valueB);
 
                     tensorA.SetValue(value, index);
 

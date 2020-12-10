@@ -1,0 +1,13 @@
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.exe
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.deps.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.runtimeconfig.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.runtimeconfig.dev.json
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.dll
+D:\Work\C#\NeuralNet\bin\Debug\netcoreapp3.1\MLPScratch.pdb
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.AssemblyInfoInputs.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.AssemblyInfo.cs
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.csproj.CoreCompileInputs.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.dll
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.pdb
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.genruntimeconfig.cache
+D:\Work\C#\NeuralNet\obj\Debug\netcoreapp3.1\MLPScratch.csprojAssemblyReference.cache

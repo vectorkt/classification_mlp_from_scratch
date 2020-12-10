@@ -1,53 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-
-
-namespace NeuralNet
+namespace MLPScratch
 {
     class Program
     {
 
-        private static decimal staticDecimal()
+        private static double staticdouble()
         {
             Console.WriteLine("hello delegate");
-            return 0.7M;
+            return 0.7d;
 
         }
 
-        private static Decimal rand() {
+        private static double rand() {
             var rand = new Random();
-            return (Decimal)(new Random()).NextDouble();
+            return (double)(new Random()).NextDouble();
 
         }
 
-        private static Decimal one()
+
+        private static double one()
         {
             
-            return 1M;
+            return 1d;
 
         }
 
-        private static Decimal two()
+        private static double two()
         {
 
-            return 2M;
+            return 2d;
 
         }
 
 
-        private static Decimal three()
+        private static double three()
         {
 
-            return 3M;
+            return 3d;
+
+        }
+
+
+        public static bool checkIfNull(Object input) {
+
+            return !(input != null);
+
 
         }
 
         //YIELD INCREMENTOR
         /*
-        private static IEnumerable<Decimal> increment() {
+        private static IEnumerable<double> increment() {
 
-            Decimal value = 0;
+            double value = 0;
 
             for (int i = 0; ; i++)
             {
@@ -91,6 +99,79 @@ namespace NeuralNet
         {
             Console.WriteLine();
 
+            Layer myLayer = new Layer(3, 2);
+
+            NeuralNetwork network = new NeuralNetwork(2,3,2);
+
+            double number = 3;
+
+            Console.WriteLine(-number);
+
+            var items = Enumerable.Range(0,10).Select(x => x ).Reverse().ToArray();
+
+            LinearAlgebra.printTensor(items);
+
+            foreach (var a in items) {
+
+                Console.WriteLine(a);
+            
+            }
+
+            /*
+            Random rnd = new Random();
+
+            int a, b, c;
+
+            Tensor matrixA, matrixB;
+
+            while (true) {
+
+                a = rnd.Next(1, 3);
+
+                b = rnd.Next(1, 3);
+
+                c = rnd.Next(1, 100);
+
+
+
+                matrixA = new Tensor(a, b);
+
+                matrixB = new Tensor(a, b);
+
+                matrixA.print();
+                //matrixA.printShape();
+                //matrixB.print();
+                //matrixB.printShape();
+
+                Tensor matrixC = matrixA.applyFunction(x=>2*x + 1) ;
+
+                matrixC.print();
+
+
+            }
+
+
+            
+            double[,] matrixA = new double[,] {
+                { 1, 2 },
+                { 3, 5 } };
+
+
+            double[,] matrixB = new double[,] {
+                { 7,13 },
+                { 11,17 } };
+
+
+            Array matrixT = LinearAlgebra.generateTensor(rand, 3, 2);
+            Array matrixZ = LinearAlgebra.generateTensor(rand, 2, 3);
+
+            LinearAlgebra.tensorMutiplication(matrixT, matrixZ);
+
+
+            
+      
+
+            
             int[] array1D = new int[] {  1, 2 ,  3, 4  };
 
             
@@ -121,42 +202,42 @@ namespace NeuralNet
 
 
 
-            /*
-            Decimal[,] matrix = new Decimal[,] { 
+            
+            double[,] matrix = new double[,] { 
                 { 1, 2 }, 
                 { 3, 5 } };
 
 
-            Decimal[,] vector = new Decimal[,] {
+            double[,] vector = new double[,] {
                 { 7 },
                 { 11 } };
             
 
-            Decimal[,] matrix = new Decimal[,] {
+            double[,] matrix = new double[,] {
                 { 1, 2 },
                 { 3, 5 } };
 
 
-            Decimal[,] vector = new Decimal[,] {
+            double[,] vector = new double[,] {
                 { 7,13 },
                 { 11,17 } };
-            /**/
+            
 
 
-            Decimal[,] matrix = new Decimal[,] {
+            double[,] matrix = new double[,] {
                 { 1, 2 },
                 { 3, 5 } };
 
 
-            Decimal[,] vector = new Decimal[,] {
+            double[,] vector = new double[,] {
                 { 7,13 },
                 { 11,17 } };
 
 
 
-            //LinearAlgebra.printTensor(LinearAlgebra.tensorMutiplication(matrix, vector));
 
 
+            
             LinearAlgebra.printTensor(LinearAlgebra.addition(vectorC, vectorD));
             LinearAlgebra.printTensor( LinearAlgebra.subtraction(vectorC, vectorD));
             LinearAlgebra.printTensor(LinearAlgebra.elementWiseMultiplication(vectorC, vectorD));
@@ -166,6 +247,15 @@ namespace NeuralNet
             LinearAlgebra.printTensor(LinearAlgebra.addition(matrixT, matrixZ));
             LinearAlgebra.printTensor(LinearAlgebra.subtraction(matrixT, matrixZ));
             LinearAlgebra.printTensor(LinearAlgebra.elementWiseMultiplication(matrixT, matrixZ));
+            
+
+
+            LinearAlgebra.printTensor(LinearAlgebra.tensorMutiplication(matrixT, vectorA));
+
+            LinearAlgebra.printTensor(LinearAlgebra.shape(matrixT));
+            LinearAlgebra.printTensor(LinearAlgebra.shape(vectorA));
+            /**/
+
 
         }
 

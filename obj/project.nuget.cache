@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "uZX9aWdZh8h4tv2fkst2oETOvvYoeUWb35LqnxToaQ+soKHi26CLXdqTmLYv9PUoUfGPp7NUT0meoogmg7RvFw==",
+  "dgSpecHash": "XHKSRZsIjFtgWx8WRnqW0pXD9S2uFBJq9v6/a76vjsjHDGNw4xyQCC9rPQFz4WPczLNVsfGld7LOXVgTzkdfKw==",
   "success": true,
-  "projectFilePath": "D:\\Work\\C#\\NeuralNet\\NeuralNet.csproj",
+  "projectFilePath": "D:\\Work\\C#\\NeuralNet\\MLPScratch.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
