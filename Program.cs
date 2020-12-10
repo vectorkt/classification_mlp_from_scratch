@@ -28,6 +28,21 @@ namespace NeuralNet
 
         }
 
+        private static Decimal two()
+        {
+
+            return 2M;
+
+        }
+
+
+        private static Decimal three()
+        {
+
+            return 3M;
+
+        }
+
         //YIELD INCREMENTOR
         /*
         private static IEnumerable<Decimal> increment() {
@@ -59,7 +74,7 @@ namespace NeuralNet
 
         /**/
 
-    private static int[][] Concat(int[][] array1, int[][] array2)
+        private static int[][] Concat(int[][] array1, int[][] array2)
     {
         int[][] result = new int[array1.Length + array2.Length][];
 
@@ -99,8 +114,8 @@ namespace NeuralNet
             Array matrixZ = LinearAlgebra.generateTensor(rand, 3, 2);
             Array vectorA = LinearAlgebra.generateTensor(rand, 2, 1);
             Array vectorB = LinearAlgebra.generateTensor(rand, 2, 1);
-            Array vectorC = LinearAlgebra.generateTensor(one, 3, 1);
-            Array vectorD = LinearAlgebra.generateTensor(one, 3, 1);
+            Array vectorC = LinearAlgebra.generateTensor(two, 3, 1);
+            Array vectorD = LinearAlgebra.generateTensor(three, 3, 1);
 
 
 
@@ -141,7 +156,16 @@ namespace NeuralNet
 
             //LinearAlgebra.printTensor(LinearAlgebra.tensorMutiplication(matrix, vector));
 
-            LinearAlgebra.printTensor(LinearAlgebra.elementWiseMultiplication(matrix, vector));
+
+            LinearAlgebra.printTensor(LinearAlgebra.addition(vectorC, vectorD));
+            LinearAlgebra.printTensor( LinearAlgebra.subtraction(vectorC, vectorD));
+            LinearAlgebra.printTensor(LinearAlgebra.elementWiseMultiplication(vectorC, vectorD));
+
+
+
+            LinearAlgebra.printTensor(LinearAlgebra.addition(matrixT, matrixZ));
+            LinearAlgebra.printTensor(LinearAlgebra.subtraction(matrixT, matrixZ));
+            LinearAlgebra.printTensor(LinearAlgebra.elementWiseMultiplication(matrixT, matrixZ));
 
         }
 

@@ -6,8 +6,8 @@ namespace NeuralNet
 {
     class LinearAlgebra
     {
-
-        static public void printArray(int[] arr) {
+        //consider deleting
+        static private void printArray(int[] arr) {
 
             Console.Write("[ ");
             foreach(var a in arr)
@@ -179,9 +179,7 @@ namespace NeuralNet
         }
 
 
-
-
-
+       
         static public Array scalarMultiplication(Decimal scalar, Array tensorInput)
         {
 
@@ -242,265 +240,47 @@ namespace NeuralNet
         }
 
 
-
-        static public Array addition(Array tensorInputA, Array tensorInputB)
-        {
-
-            Array tensorA = (Array)tensorInputA.Clone();
-            Array tensorB = (Array)tensorInputB.Clone();
-
-            if (tensorA.Rank != tensorB.Rank) { 
-            
-                throw new System.ArgumentException("tensor sizes don't match");
-
-            }
-            else
-            {
-
-                for (int d = 0; d < tensorA.Rank; d++)
-                {
-
-                    if (tensorA.GetLength(d) != tensorB.GetLength(d))
-                    {
-
-                        throw new System.ArgumentException("tensor sizes don't match");
-
-                    }
+        
 
 
-                }
+        static public Array addition(Array tensorInputA, Array tensorInputB) {
 
 
-            }
+            return applyOperation(tensorInputA, tensorInputB, (x, y) => x + y);
 
-            int[] index = new int[tensorA.Rank];// = new int[] { 0, 0, 0 };
-
-            //initialize indexes
-            for (int i = 0; i < index.Length; i++)
-            {
-
-                index[i] = 0;
-
-            }
-
-
-            
-            additionRecursive(tensorA, tensorB, index, 0);
-
-            return tensorA;
 
         }
 
-        static private void additionRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim)
-        {
-
-            if (dim == tensorA.Rank - 1)
-            {
-
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
-
-                    index[dim] = i;
-
-                    Decimal valueA = (Decimal)tensorA.GetValue(index);
-                    Decimal valueB = (Decimal)tensorB.GetValue(index);
-
-                    Decimal value = valueA+valueB;
-
-                    tensorA.SetValue(value, index);
-
-                }
-
-            }
-            else
-            {
-
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
-
-                    index[dim] = i;
-
-                    additionRecursive(tensorA, tensorB, index, dim + 1);
-
-                }
-
-            }
-
-        }
 
 
         static public Array subtraction(Array tensorInputA, Array tensorInputB)
         {
 
-            Array tensorA = (Array)tensorInputA.Clone();
-            Array tensorB = (Array)tensorInputB.Clone();
 
-            if (tensorA.Rank != tensorB.Rank)
-            {
+            return applyOperation(tensorInputA, tensorInputB, (x, y) => x - y);
 
-                throw new System.ArgumentException("tensor sizes don't match");
-
-
-
-
-            }
-            else {
-
-                for (int d = 0; d < tensorA.Rank; d++) {
-
-                    if (tensorA.GetLength(d) != tensorB.GetLength(d)) {
-
-                        throw new System.ArgumentException("tensor sizes don't match");
-
-                    }
-                    
-                
-                }
-                
-            
-            }
-
-            int[] index = new int[tensorA.Rank];// = new int[] { 0, 0, 0 };
-
-            //initialize indexes
-            for (int i = 0; i < index.Length; i++)
-            {
-
-                index[i] = 0;
-
-            }
-
-
-            
-            subtractionRecursive(tensorA, tensorB, index, 0);
-
-            return tensorA;
 
         }
-
-        static private void subtractionRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim)
-        {
-
-            if (dim == tensorA.Rank - 1)
-            {
-
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
-
-                    index[dim] = i;
-
-                    Decimal valueA = (Decimal)tensorA.GetValue(index);
-                    Decimal valueB = (Decimal)tensorB.GetValue(index);
-
-                    Decimal value = valueA - valueB;
-
-                    tensorA.SetValue(value, index);
-
-                }
-
-            }
-            else
-            {
-
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
-
-                    index[dim] = i;
-
-                    subtractionRecursive(tensorA, tensorB, index, dim + 1);
-
-                }
-
-            }
-
-        }
-
 
         static public Array elementWiseMultiplication(Array tensorInputA, Array tensorInputB)
         {
 
-            Array tensorA = (Array)tensorInputA.Clone();
-            Array tensorB = (Array)tensorInputB.Clone();
 
-            if (tensorA.Rank != tensorB.Rank)
-            {
+            return applyOperation(tensorInputA, tensorInputB, (x, y) => x * y);
 
-                throw new System.ArgumentException("tensor sizes don't match");
-
-            }
-            else
-            {
-
-                for (int d = 0; d < tensorA.Rank; d++)
-                {
-
-                    if (tensorA.GetLength(d) != tensorB.GetLength(d))
-                    {
-
-                        throw new System.ArgumentException("tensor sizes don't match");
-
-                    }
-
-
-                }
-
-
-            }
-
-            int[] index = new int[tensorA.Rank];// = new int[] { 0, 0, 0 };
-
-            //initialize indexes
-            for (int i = 0; i < index.Length; i++)
-            {
-
-                index[i] = 0;
-
-            }
-
-
-
-            elementWiseMultiplicationRecursive(tensorA, tensorB, index, 0);
-
-            return tensorA;
 
         }
 
-        static private void elementWiseMultiplicationRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim)
-        {
 
-            if (dim == tensorA.Rank - 1)
-            {
 
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
 
-                    index[dim] = i;
+      
 
-                    Decimal valueA = (Decimal)tensorA.GetValue(index);
-                    Decimal valueB = (Decimal)tensorB.GetValue(index);
 
-                    Decimal value = valueA * valueB;
+       
 
-                    tensorA.SetValue(value, index);
 
-                }
-
-            }
-            else
-            {
-
-                for (int i = 0; i < tensorA.GetLength(dim); i++)
-                {
-
-                    index[dim] = i;
-
-                    elementWiseMultiplicationRecursive(tensorA, tensorB, index, dim + 1);
-
-                }
-
-            }
-
-        }
+ 
 
 
         static public Array concatenateRows(Array tensorInputA, Array tensorInputB)
@@ -777,7 +557,91 @@ namespace NeuralNet
         }
 
 
+        static public Array applyOperation(Array tensorInputA, Array tensorInputB, Func<Decimal, Decimal, Decimal> operation)
+        {
 
+            Array tensorA = (Array)tensorInputA.Clone();
+            Array tensorB = (Array)tensorInputB.Clone();
+
+            if (tensorA.Rank != tensorB.Rank)
+            {
+
+                throw new System.ArgumentException("tensor sizes don't match");
+
+            }
+            else
+            {
+
+                for (int d = 0; d < tensorA.Rank; d++)
+                {
+
+                    if (tensorA.GetLength(d) != tensorB.GetLength(d))
+                    {
+
+                        throw new System.ArgumentException("tensor sizes don't match");
+
+                    }
+
+
+                }
+
+
+            }
+
+            int[] index = new int[tensorA.Rank];// = new int[] { 0, 0, 0 };
+
+            //initialize indexes
+            for (int i = 0; i < index.Length; i++)
+            {
+
+                index[i] = 0;
+
+            }
+
+
+
+            applyOperationRecursive(tensorA, tensorB, index, 0, operation);
+
+            return tensorA;
+
+        }
+
+        static private void applyOperationRecursive(System.Array tensorA, System.Array tensorB, int[] index, int dim, Func<Decimal, Decimal, Decimal> operation)
+        {
+
+            if (dim == tensorA.Rank - 1)
+            {
+
+                for (int i = 0; i < tensorA.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    Decimal valueA = (Decimal)tensorA.GetValue(index);
+                    Decimal valueB = (Decimal)tensorB.GetValue(index);
+
+                    Decimal value = operation(valueA,valueB);
+
+                    tensorA.SetValue(value, index);
+
+                }
+
+            }
+            else
+            {
+
+                for (int i = 0; i < tensorA.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    applyOperationRecursive(tensorA, tensorB, index, dim + 1,operation);
+
+                }
+
+            }
+
+        }
 
 
     }
