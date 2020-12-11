@@ -50,7 +50,7 @@ namespace MLPScratch
 
             if (dim == array.Rank-1)
             {
-                //Console.WriteLine();
+                
                 Console.Write("[ ");
 
                 for (int i = 0; i < array.GetLength(dim); i++)
@@ -344,7 +344,7 @@ namespace MLPScratch
             //Console.WriteLine("A: " + rowsA + " " + colsA);
             //Console.WriteLine("B: " + rowsB + " " + colsB);
 
-            //Console.WriteLine();
+            
 
             double[,] result = new double[rowsA + rowsB, colsA];
 
@@ -605,7 +605,7 @@ namespace MLPScratch
             /**/
 
             for (int c = 1; c < colsB; c++) {
-                Console.WriteLine();
+                
                 nextColumn = LinearAlgebra.getCol(tensorB, c);
 
 
@@ -720,6 +720,68 @@ namespace MLPScratch
 
         }
 
+
+        static public double sum(Array tensorInput)
+        {
+
+            Array tensor = (Array)tensorInput.Clone();
+
+            int[] index = new int[tensor.Rank];// = new int[] { 0, 0, 0 };
+
+            //initialize indexes
+            for (int i = 0; i < index.Length; i++)
+            {
+
+                index[i] = 0;
+
+            }
+
+
+
+            return sumRecursive(tensor, index, 0);
+
+            
+
+        }
+
+        static private double sumRecursive(System.Array array, int[] index, int dim)
+        {
+
+
+            double sum = 0;
+
+            if (dim == array.Rank - 1)
+            {
+
+                for (int i = 0; i < array.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    sum += (double)array.GetValue(index);
+
+                }
+
+                
+
+            }
+            else
+            {
+
+                for (int i = 0; i < array.GetLength(dim); i++)
+                {
+
+                    index[dim] = i;
+
+                    sum += sumRecursive(array, index, dim + 1);
+
+                }
+
+            }
+
+            return sum;
+
+        }
 
     }
 }

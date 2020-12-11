@@ -7,90 +7,7 @@ namespace MLPScratch
     class Program
     {
 
-        private static double staticdouble()
-        {
-            Console.WriteLine("hello delegate");
-            return 0.7d;
-
-        }
-
-        private static double rand() {
-            var rand = new Random();
-            return (double)(new Random()).NextDouble();
-
-        }
-
-
-        private static double one()
-        {
-            
-            return 1d;
-
-        }
-
-        private static double two()
-        {
-
-            return 2d;
-
-        }
-
-
-        private static double three()
-        {
-
-            return 3d;
-
-        }
-
-
-        public static bool checkIfNull(Object input) {
-
-            return !(input != null);
-
-
-        }
-
-        //YIELD INCREMENTOR
-        /*
-        private static IEnumerable<double> increment() {
-
-            double value = 0;
-
-            for (int i = 0; ; i++)
-            {
-                yield return value += 1;
-            }
-
-        }
-
-
-        public static IEnumerable<int> getInt()
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                yield return i;
-            }
-        }
-
-        IEnumerator<int> enumerator = getInt().GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                int n = enumerator.Current;
-        Console.WriteLine(n);
-            }
-
-        /**/
-
-        private static int[][] Concat(int[][] array1, int[][] array2)
-    {
-        int[][] result = new int[array1.Length + array2.Length][];
-
-        array1.CopyTo(result, 0);
-        array2.CopyTo(result, array1.Length);
-
-        return result;
-    }
+      
 
 
 
@@ -99,23 +16,46 @@ namespace MLPScratch
         {
             Console.WriteLine();
 
-            Layer myLayer = new Layer(3, 2);
+            
+
+            
+
+
+            double[,] raw_dataset = new double[,] {
+                {2.7810836, 2.550537003, 0},
+                {1.465489372,2.362125076,0},
+                {3.396561688,4.400293529,0},
+                {1.38807019,1.850220317,0},
+                {3.06407232,3.005305973,0},
+                {7.627531214,2.759262235,1},
+                {5.332441248,2.088626775,1},
+                {6.922596716,1.77106367,1},
+                {8.675418651,-0.242068655,1},
+                {7.673756466,3.508563011,1}
+            };
+
+            double[] arr = new double[] { 1, 2, 23, };
+
+
+
+
+            
+            Dataset dataset = new Dataset(raw_dataset);
 
             NeuralNetwork network = new NeuralNetwork(2,3,2);
 
-            double number = 3;
 
-            Console.WriteLine(-number);
+            network.train(dataset, 0.5, 100);
 
-            var items = Enumerable.Range(0,10).Select(x => x ).Reverse().ToArray();
 
-            LinearAlgebra.printTensor(items);
 
-            foreach (var a in items) {
+            foreach(Datum d in dataset.data) {
 
-                Console.WriteLine(a);
+                Console.WriteLine("Example \n\n"+network.predict(d.input)+"\n"+d.oneHotEncoding+"\n\n")  ;
+            
             
             }
+
 
             /*
             Random rnd = new Random();
@@ -165,10 +105,7 @@ namespace MLPScratch
             Array matrixT = LinearAlgebra.generateTensor(rand, 3, 2);
             Array matrixZ = LinearAlgebra.generateTensor(rand, 2, 3);
 
-            LinearAlgebra.tensorMutiplication(matrixT, matrixZ);
-
-
-            
+            LinearAlgebra.tensorMutiplication(matrixT, matrixZ);            
       
 
             
@@ -259,6 +196,94 @@ namespace MLPScratch
 
         }
 
+
+
+        private static double staticdouble()
+        {
+            Console.WriteLine("hello delegate");
+            return 0.7d;
+
+        }
+
+        private static double rand()
+        {
+            var rand = new Random();
+            return (double)(new Random()).NextDouble();
+
+        }
+
+
+        private static double one()
+        {
+
+            return 1d;
+
+        }
+
+        private static double two()
+        {
+
+            return 2d;
+
+        }
+
+
+        private static double three()
+        {
+
+            return 3d;
+
+        }
+
+
+        public static bool checkIfNull(Object input)
+        {
+
+            return !(input != null);
+
+
+        }
+
+        //YIELD INCREMENTOR
+        /*
+        private static IEnumerable<double> increment() {
+
+            double value = 0;
+
+            for (int i = 0; ; i++)
+            {
+                yield return value += 1;
+            }
+
+        }
+
+
+        public static IEnumerable<int> getInt()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                yield return i;
+            }
+        }
+
+        IEnumerator<int> enumerator = getInt().GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                int n = enumerator.Current;
+        Console.WriteLine(n);
+            }
+
+        /**/
+
+        private static int[][] Concat(int[][] array1, int[][] array2)
+        {
+            int[][] result = new int[array1.Length + array2.Length][];
+
+            array1.CopyTo(result, 0);
+            array2.CopyTo(result, array1.Length);
+
+            return result;
+        }
 
     }
 }
